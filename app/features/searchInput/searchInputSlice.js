@@ -11,7 +11,7 @@ export const searchInputSlice = createSlice({
   reducers: {
     printText: (state, action) => {
       state.string = action.payload
-      console.log(action.payload)
+      
     },
   reset: (state) => {
     state.string = ""

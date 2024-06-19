@@ -11,7 +11,6 @@ export const ForecastList = () => {
     return array.reduce((a, b) => a + b) / array.length;
   }
 
-  console.log({ forecastsListState })
 
   const columnHeader =
     <div className="row justify-content-md-center text-center">

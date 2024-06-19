@@ -26,7 +26,7 @@ function SearchInput() {
             type="text"
             className="form-control"
             placeholder="Get a five-day forecast in your different cities"
-            value={string}
+            defaultValue={string}
             onChange={(e) =>
               dispatch(printText(e.target.value))
             }
@@ -36,7 +36,7 @@ function SearchInput() {
           <div className="input-group-append">
             <button type="button" className="btn btn-primary"
               onClick={() => {
-                dispatch(fetchSingleDayForcast(string));
+                dispatch(fetchFiveDayForecast(string))
                 dispatch(reset())
               }}>
               Search

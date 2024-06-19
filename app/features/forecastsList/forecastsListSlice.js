@@ -7,23 +7,23 @@ const rootUrl = openWeatherApi.rootUrl
 
 export const fetchSingleDayForcast = createAsyncThunk('data/fetchSingleDayForcast', async (locationId) => {
   const response = await axios.get(`${rootUrl}/weather?q=${locationId},us&units=imperial&appid=${openWeatherApi.key}`);
-  console.log(response.data)
+  
   return response.data;
 })
 
 export const fetchFiveDayForecast = createAsyncThunk('data/fetchFiveDayForecast', async (locationId) => {
   const singleForecastResponse = await axios.get(`${rootUrl}/weather?q=${locationId},us&units=imperial&appid=${openWeatherApi.key}`);
 
-  console.log({ singleForecastResponse })
+  
   
   let { coord: { lon: longitude, lat: latitude } } = singleForecastResponse.data;
 
-  console.log({latitude, longitude})
+  
 
   
   const fiveDayForecastResponse = await axios.get(`${rootUrl}/forecast?lat=${latitude}&lon=${longitude}&units=imperial&appid=${openWeatherApi.key}`)
   
-  console.log({ fiveDayForecastResponse })
+  
 
   return fiveDayForecastResponse.data
 })

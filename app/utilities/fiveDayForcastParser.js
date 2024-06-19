@@ -3,7 +3,7 @@
 export const parseFiveDayForecast = (fiveDayForecast) => {
   let { list: forecasts, city:{name} } = fiveDayForecast;
 
-  console.log(fiveDayForecast)
+  
 
   let uniqueId = Math.round(Math.random() * 100000000).toString()
 
