@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { openWeatherApi } from "@/OpenWeatherAPI";
 import axios from "axios";
+import { parseFiveDayForecast } from "@/app/utilities/fiveDayForcastParser";
 
 const rootUrl = openWeatherApi.rootUrl
 
@@ -10,10 +11,21 @@ export const fetchSingleDayForcast = createAsyncThunk('data/fetchSingleDayForcas
   return response.data;
 })
 
-export const fetchFiveDayForecast = createAsyncThunk('data/fetchFiveDayForecast', async (longitude, latitude) => {
-  const response = await axios.get(`${rootUrl}/forecast?lat=${latitude}&lon=${longitude}&units=imperial&appid=${openWeatherApi.key}`)
-  console.log(response.data)
-  return response.data
+export const fetchFiveDayForecast = createAsyncThunk('data/fetchFiveDayForecast', async (locationId) => {
+  const singleForecastResponse = await axios.get(`${rootUrl}/weather?q=${locationId},us&units=imperial&appid=${openWeatherApi.key}`);
+
+  console.log({ singleForecastResponse })
+  
+  let { coord: { lon: longitude, lat: latitude } } = singleForecastResponse.data;
+
+  console.log({latitude, longitude})
+
+  
+  const fiveDayForecastResponse = await axios.get(`${rootUrl}/forecast?lat=${latitude}&lon=${longitude}&units=imperial&appid=${openWeatherApi.key}`)
+  
+  console.log({ fiveDayForecastResponse })
+
+  return fiveDayForecastResponse.data
 })
 
 const initialState = {
@@ -32,23 +44,12 @@ export const forecastsListSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchSingleDayForcast.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(fetchSingleDayForcast.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.forecasts.unshift(action.payload)
-      })
-      .addCase(fetchSingleDayForcast.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      });
-    builder
       .addCase(fetchFiveDayForecast.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(fetchFiveDayForecast.fulfilled, (state, action) => {
         state.status = 'succeeded';
+        state.forecasts.unshift(parseFiveDayForecast(action.payload))
       })
       .addCase(fetchFiveDayForecast.rejected, (state, action) => {
         state.status = 'failed';

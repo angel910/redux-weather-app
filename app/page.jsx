@@ -3,7 +3,6 @@ import SearchInput from "./features/searchInput/SearchInput"
 import { ForecastList } from "./features/forecastsList/ForecastsList"
 
 
-
 export default function Home() {
 
 

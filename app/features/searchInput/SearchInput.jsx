@@ -1,7 +1,7 @@
 'use client';
 import { useDispatch, useSelector } from "react-redux";
 import { printText, reset } from "./searchInputSlice";
-import { fetchSingleDayForcast } from "../forecastsList/forecastsListSlice";
+import { fetchFiveDayForecast, fetchSingleDayForcast } from "../forecastsList/forecastsListSlice";
 
 
 function SearchInput() {
@@ -13,7 +13,7 @@ function SearchInput() {
     let key = e.key
 
     if (key === 'Enter') {
-      dispatch(fetchSingleDayForcast(string))
+      dispatch(fetchFiveDayForecast(string))
       dispatch(reset())
     }
   }
