@@ -5,25 +5,11 @@ import { parseFiveDayForecast } from "@/app/utilities/fiveDayForcastParser";
 
 const rootUrl = openWeatherApi.rootUrl
 
-export const fetchSingleDayForcast = createAsyncThunk('data/fetchSingleDayForcast', async (locationId) => {
-  const response = await axios.get(`${rootUrl}/weather?q=${locationId},us&units=imperial&appid=${openWeatherApi.key}`);
-  
-  return response.data;
-})
-
 export const fetchFiveDayForecast = createAsyncThunk('data/fetchFiveDayForecast', async (locationId) => {
-  const singleForecastResponse = await axios.get(`${rootUrl}/weather?q=${locationId},us&units=imperial&appid=${openWeatherApi.key}`);
-
-  
-  
+  const singleForecastResponse = await axios.get(`${rootUrl}/weather?q=${locationId},us&units=imperial&appid=${openWeatherApi.key}`);  
   let { coord: { lon: longitude, lat: latitude } } = singleForecastResponse.data;
-
-  
-
   
   const fiveDayForecastResponse = await axios.get(`${rootUrl}/forecast?lat=${latitude}&lon=${longitude}&units=imperial&appid=${openWeatherApi.key}`)
-  
-  
 
   return fiveDayForecastResponse.data
 })

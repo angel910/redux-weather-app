@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   string: "",
@@ -9,9 +9,8 @@ export const searchInputSlice = createSlice({
   name: "searchInputSlice",
   initialState,
   reducers: {
-    printText: (state, action) => {
-      state.string = action.payload
-      
+    setInputState: (state, action) => {
+      state.string = action.payload 
     },
   reset: (state) => {
     state.string = ""
@@ -19,6 +18,6 @@ export const searchInputSlice = createSlice({
   },
 })
 
-export const { printText, reset } = searchInputSlice.actions;
+export const { setInputState, reset } = searchInputSlice.actions;
 
 export default searchInputSlice.reducer;

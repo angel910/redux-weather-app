@@ -1,12 +1,11 @@
 'use client';
 import { useDispatch, useSelector } from "react-redux";
-import { printText, reset } from "./searchInputSlice";
+import { setInputState, reset } from "./searchInputSlice";
 import { fetchFiveDayForecast, fetchSingleDayForcast } from "../forecastsList/forecastsListSlice";
 
 
 function SearchInput() {
   const string = useSelector((state) => state.searchInput.string)
-  const forecasts = useSelector((state) => state.forecastsList.forecasts)
   const dispatch = useDispatch()
 
   const handleEnterKey = (e) => {
@@ -28,7 +27,7 @@ function SearchInput() {
             placeholder="Get a five-day forecast in your different cities"
             defaultValue={string}
             onChange={(e) =>
-              dispatch(printText(e.target.value))
+              dispatch(setInputState(e.target.value))
             }
             onKeyDown={(e) => handleEnterKey(e)}
           >
